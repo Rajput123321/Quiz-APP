@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>React Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .counter-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      font-size: 48px;
+      margin: 20px 0;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<!-- React and ReactDOM via CDN -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+<script>
+  const { useState } = React;
+
+  function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+      React.createElement('div', { className: 'counter-container' },
+        React.createElement('h2', null, '🔢 React Counter'),
+        React.createElement('h1', null, count),
+        React.createElement('div', null,
+          React.createElement('button', { onClick: () => setCount(count + 1) }, 'Increment'),
+          React.createElement('button', { onClick: () => setCount(count - 1) }, 'Decrement'),
+          React.createElement('button', { onClick: () => setCount(0) }, 'Reset')
+        )
+      )
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(React.createElement(Counter));
+</script>
+
+</body>
+</html>
