@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .search-box {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .search-box input {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .movie-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .movie-item {
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .movie-item h3 {
+      margin: 0;
+      color: #333;
+    }
+    .movie-item p {
+      margin: 5px 0 0;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Movie List</h1>
+  
+  <!-- Search Box -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search movies by title..." onkeyup="searchMovies()">
+  </div>
+  
+  <!-- Movie List -->
+  <ul id="movieList" class="movie-list">
+    <!-- Movie items will be displayed here -->
+  </ul>
+</div>
+
+<script>
+  // Hardcoded list of movies
+  const movies = [
+    { title: "The Shawshank Redemption", year: 1994, description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency." },
+    { title: "The Godfather", year: 1972, description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son." },
+    { title: "The Dark Knight", year: 2008, description: "When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham." },
+    { title: "Pulp Fiction", year: 1994, description: "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption." },
+    { title: "Forrest Gump", year: 1994, description: "The presidencies of Kennedy and Johnson, the Vietnam War, the Civil Rights Movement, and other historical events unfold from the perspective of an Alabama man with an extraordinary life story." }
+  ];
+
+  // Function to display movies
+  function displayMovies(moviesToDisplay) {
+    const movieList = document.getElementById('movieList');
+    movieList.innerHTML = ''; // Clear the current list
+
+    moviesToDisplay.forEach(movie => {
+      const movieItem = document.createElement('li');
+      movieItem.classList.add('movie-item');
+      
+      const movieTitle = document.createElement('h3');
+      movieTitle.textContent = `${movie.title} (${movie.year})`;
+      
+      const movieDescription = document.createElement('p');
+      movieDescription.textContent = movie.description;
+
+      movieItem.appendChild(movieTitle);
+      movieItem.appendChild(movieDescription);
+
+      movieList.appendChild(movieItem);
+    });
+  }
+
+  // Function to search movies by title
+  function searchMovies() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(searchInput));
+    displayMovies(filteredMovies);
+  }
+
+  // Initial display of all movies
+  displayMovies(movies);
+</script>
+
+</body>
+</html>
