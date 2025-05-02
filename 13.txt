@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .weather-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .temperature {
+      font-size: 48px;
+      margin: 10px 0;
+    }
+    .details {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<!-- React and ReactDOM -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+<script>
+  const { useState } = React;
+
+  // CityWeather Component
+  function CityWeather(props) {
+    const { city, temperature, description, humidity } = props;
+    return (
+      React.createElement('div', { className: 'weather-container' },
+        React.createElement('h1', null, `Weather in ${city}`),
+        React.createElement('div', { className: 'temperature' }, `${temperature}°C`),
+        React.createElement('div', { className: 'details' }, `Description: ${description}`),
+        React.createElement('div', { className: 'details' }, `Humidity: ${humidity}%`)
+      )
+    );
+  }
+
+  // WeatherApp Component
+  function WeatherApp() {
+    const weatherData = {
+      city: 'New York',
+      temperature: 25,  // Hardcoded temperature in °C
+      description: 'Sunny',
+      humidity: 60  // Hardcoded humidity percentage
+    };
+
+    return (
+      React.createElement(CityWeather, weatherData)
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(React.createElement(WeatherApp));
+</script>
+
+</body>
+</html>
