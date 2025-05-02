@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    .container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    input, select {
+      padding: 8px;
+      width: 100%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .edit-btn, .delete-btn {
+      padding: 5px 10px;
+      cursor: pointer;
+      border: none;
+      color: white;
+      border-radius: 4px;
+    }
+    .edit-btn {
+      background-color: #ffc107;
+    }
+    .delete-btn {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Student Records</h2>
+  
+  <!-- Form to Add/Edit Student Records -->
+  <form id="studentForm">
+    <input type="hidden" id="editIndex">
+    <label for="name">Student Name:</label>
+    <input type="text" id="name" required placeholder="Enter student name">
+
+    <label for="rollNo">Roll Number:</label>
+    <input type="number" id="rollNo" required placeholder="Enter roll number">
+
+    <label for="grade">Grade:</label>
+    <select id="grade" required>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="F">F</option>
+    </select>
+
+    <button type="submit">Add Student</button>
+  </form>
+
+  <!-- Student Records Table -->
+  <table id="studentsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll No</th>
+        <th>Grade</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Table rows will be added dynamically here -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const studentForm = document.getElementById('studentForm');
+  const nameInput = document.getElementById('name');
+  const rollNoInput = document.getElementById('rollNo');
+  const gradeSelect = document.getElementById('grade');
+  const studentsTable = document.getElementById('studentsTable').getElementsByTagName('tbody')[0];
+  const editIndexInput = document.getElementById('editIndex');
+
+  let students = [];
+
+  // Function to render the student table
+  function renderTable() {
+    studentsTable.innerHTML = '';
+    students.forEach((student, index) => {
+      const row = studentsTable.insertRow();
+      row.innerHTML = `
+        <td>${student.name}</td>
+        <td>${student.rollNo}</td>
+        <td>${student.grade}</td>
+        <td>
+          <button class="edit-btn" onclick="editStudent(${index})">Edit</button>
+          <button class="delete-btn" onclick="deleteStudent(${index})">Delete</button>
+        </td>
+      `;
+    });
+  }
+
+  // Add or Edit student record
+  studentForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+    const rollNo = rollNoInput.value.trim();
+    const grade = gradeSelect.value;
+
+    if (editIndexInput.value !== '') {
+      // Edit existing student
+      const index = editIndexInput.value;
+      students[index] = { name, rollNo, grade };
+      editIndexInput.value = '';  // Reset the form for new entries
+    } else {
+      // Add new student
+      students.push({ name, rollNo, grade });
+    }
+
+    // Reset form
+    nameInput.value = '';
+    rollNoInput.value = '';
+    gradeSelect.value = 'A';
+
+    renderTable();
+  });
+
+  // Edit student record
+  function editStudent(index) {
+    const student = students[index];
+    nameInput.value = student.name;
+    rollNoInput.value = student.rollNo;
+    gradeSelect.value = student.grade;
+    editIndexInput.value = index;
+  }
+
+  // Delete student record
+  function deleteStudent(index) {
+    students.splice(index, 1);
+    renderTable();
+  }
+
+</script>
+
+</body>
+</html>
