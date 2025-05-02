@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angular Two-Way Data Binding</title>
+  <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+  <h1>Angular Two-Way Data Binding</h1>
+
+  <!-- Input field bound to 'message' model -->
+  <input type="text" ng-model="message" placeholder="Type something...">
+
+  <!-- Display the message as the input field is updated -->
+  <p>Your message: {{ message }}</p>
+
+  <script>
+    // Define the AngularJS module and controller
+    angular.module('myApp', [])
+      .controller('myCtrl', function($scope) {
+        // Initialize the message model
+        $scope.message = '';
+      });
+  </script>
+
+</body>
+</html>
